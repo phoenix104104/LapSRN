@@ -4,8 +4,8 @@ function net = init_LapSRN(opts)
     rng('default');
     rng(0) ;
     
-    f       = opts.net.conv_f;
-    n       = opts.net.conv_n;
+    f       = opts.conv_f;
+    n       = opts.conv_n;
     pad     = floor(f/2);
     depth   = opts.depth;
     scale   = opts.scale;
@@ -24,7 +24,7 @@ function net = init_LapSRN(opts)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% Feature extraction branch
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    sigma   = opts.net.init_sigma;
+    sigma   = opts.init_sigma;
     filters = sigma * randn(f, f, 1, n, 'single');
     biases  = zeros(1, n, 'single');
     

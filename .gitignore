@@ -1,5 +1,7 @@
-datasets
-imdb
-results
+datasets/
+imdb/
+results/
+models/
+pretrained_models/
 *.jpg
 *.png

@@ -1,4 +1,4 @@
-function test_LapSRN_dataset(dataset, model_scale, test_scale, gpu)
+function evaluate_LapSRN_dataset(dataset, model_scale, test_scale, gpu)
     
     if( ~exist('gpu', 'var') )
         gpu = 1;
@@ -27,7 +27,7 @@ function test_LapSRN_dataset(dataset, model_scale, test_scale, gpu)
     vl_setupnn;
     
     %% load model
-    model_filename = fullfile('models', sprintf('LapSRN_x%d.mat', model_scale));
+    model_filename = fullfile('pretrained_models', sprintf('LapSRN_x%d.mat', model_scale));
     
     fprintf('Load %s\n', model_filename);
     net = load(model_filename);

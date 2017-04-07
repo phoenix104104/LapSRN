@@ -1,4 +1,4 @@
-function lr_all = generate_lr(base_lr, step, drop, num_steps)
+function lr_all = learning_rate_policy(base_lr, step, drop, min_lr, num_steps)
 
     if( drop == 0 )
         lr_all = repmat(base_lr, 1, num_steps);
@@ -8,4 +8,6 @@ function lr_all = generate_lr(base_lr, step, drop, num_steps)
         lr_all = repmat(lr_all, step, 1);
         lr_all = lr_all(:);
     end
+    
+    lr_all = max(lr_all, min_lr);
 end

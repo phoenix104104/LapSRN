@@ -13,7 +13,7 @@ addpath(fullfile(pwd, 'matconvnet-1.0-beta24/matlab'));
 vl_setupnn;
 
 %% Load model
-model_filename = fullfile('models', sprintf('LapSRN_x%d.mat', opts.scale));
+model_filename = fullfile('pretrained_models', sprintf('LapSRN_x%d.mat', opts.scale));
 
 fprintf('Load %s\n', model_filename);
 net = load(model_filename);

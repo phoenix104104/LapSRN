@@ -1,4 +1,4 @@
-function evaluate_LapSRN_dataset(dataset, model_scale, test_scale, gpu)
+function evaluate_LapSRN_dataset(model_scale, dataset, test_scale, gpu)
     
     if( ~exist('gpu', 'var') )
         gpu = 1;
@@ -45,16 +45,15 @@ function evaluate_LapSRN_dataset(dataset, model_scale, test_scale, gpu)
     num_img = length(img_list);
 
     
-    %% main loop
+    %% testing
     PSNR = zeros(num_img, 1);
     SSIM = zeros(num_img, 1);
+    IFC  = zeros(num_img, 1);
     
     for i = 1:num_img
 
         img_name = img_list{i};
         fprintf('Process %s %d/%d: %s\n', dataset, i, num_img, img_name);
-        
-        %% SR
         
         % Load GT image
         input_filename = fullfile(input_dir, sprintf('%s.png', img_name));
@@ -73,10 +72,7 @@ function evaluate_LapSRN_dataset(dataset, model_scale, test_scale, gpu)
         imwrite(img_HR, output_filename);
             
         %% evaluate
-        
-        % quantize image to uint8
-        img_GT = im2uint8(img_GT);
-        img_HR = im2uint8(img_HR); 
+        img_HR = im2double(im2uint8(img_HR)); % quantize pixel values
         
         % convert to gray scale
         img_GT = rgb2ycbcr(img_GT); img_GT = img_GT(:, :, 1);
@@ -89,18 +85,28 @@ function evaluate_LapSRN_dataset(dataset, model_scale, test_scale, gpu)
         % evaluate
         PSNR(i) = psnr(img_GT, img_HR);
         SSIM(i) = ssim(img_GT, img_HR);
+        
+        IFC(i) = ifcvec(img_GT, img_HR);
+        if( ~isreal(IFC(i)) )
+            IFC(i) = 0;
+        end
 
     end
     
-    fprintf('Average PSNR = %f\n', mean(PSNR));
-    fprintf('Average SSIM = %f\n', mean(SSIM));
-
     PSNR(end+1) = mean(PSNR);
     SSIM(end+1) = mean(SSIM);
+    IFC(end+1)  = mean(IFC);
     
-    input_filename = fullfile(output_dir, 'PSNR.txt');
-    save_matrix(PSNR, input_filename);
+    fprintf('Average PSNR = %f\n', PSNR(end));
+    fprintf('Average SSIM = %f\n', SSIM(end));
+    fprintf('Average IFC = %f\n', IFC(end));
+    
+    filename = fullfile(output_dir, 'PSNR.txt');
+    save_matrix(PSNR, filename);
 
-    input_filename = fullfile(output_dir, 'SSIM.txt');
-    save_matrix(SSIM, input_filename);
+    filename = fullfile(output_dir, 'SSIM.txt');
+    save_matrix(SSIM, filename);
+    
+    filename = fullfile(output_dir, 'IFC.txt');
+    save_matrix(IFC, filename);
 

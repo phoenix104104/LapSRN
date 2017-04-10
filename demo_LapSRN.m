@@ -1,18 +1,17 @@
 clear all;
 
 img_filename = 'emma.jpg';
-scale = 4;
 
 %% parameters
 opts.gpu    = 1;
-opts.scale  = scale;
+opts.scale  = 4;
 
 %% setup paths
 addpath(genpath('utils'));
 addpath(fullfile(pwd, 'matconvnet-1.0-beta24/matlab'));
 vl_setupnn;
 
-%% Load model
+%% Load pretrained odel
 model_filename = fullfile('pretrained_models', sprintf('LapSRN_x%d.mat', opts.scale));
 
 fprintf('Load %s\n', model_filename);

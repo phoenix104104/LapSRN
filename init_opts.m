@@ -13,8 +13,8 @@ function opts = init_opts(scale, depth, gpu)
     %% training options
     opts.gpu                = gpu;
     opts.batch_size         = 64;
-    opts.num_train_batch    = 10;
-    opts.num_valid_batch    = 10;
+    opts.num_train_batch    = 1000;
+    opts.num_valid_batch    = 100;
     opts.lr                 = 1e-5;
     opts.lr_step            = 50;
     opts.lr_drop            = 0.5;

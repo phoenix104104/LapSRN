@@ -57,11 +57,16 @@ To test LapSRN on a single-image:
 
 This script will load the pretrained LapSRN model and apply SR on emma.jpg.
 
-To test LapSRN on benchmark datasets, first download the testing datasets into sub-folder ``dataset''
+To test LapSRN on benchmark datasets, first download the testing datasets:
 
     $ cd datasets
     $ wget http://vllab1.ucmerced.edu/~wlai24/LapSRN/results/SR_testing_datasets.zip
     $ unzip SR_testing_datasets.zip
+    $ cd ..
+
+Then choose the evaluated dataset and upsampling scale in evaluate_LapSRN_dataset.m and run:
+
+    >> evaluate_LapSRN_dataset
 
 ### Training
 

@@ -26,13 +26,14 @@ For more details and evaluation results, please check out our [project webpage](
 ### Citation
 
 If you find the code and datasets useful in your research, please cite:
-
+```
     @inproceedings{LapSRN,
         author    = {Wei-Sheng Lai, Jia-Bin Huang, Narendra Ahuja, and Ming-Hsuan Yang}, 
         title     = {Deep Laplacian Pyramid Networks for Fast and Accurate Super-Resolution}, 
         booktitle = {IEEE Conferene on Computer Vision and Pattern Recognition},
         year      = {2017}
     }
+```
 
 ### Requirements and Dependencies
 

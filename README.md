@@ -40,9 +40,9 @@ If you find the code and datasets useful in your research, please cite:
 - [MatConvNet](http://www.vlfeat.org/matconvnet/)
 
 ### Installation
-```bash
-th main.lua -dataset cifar10 -bottleneckType resnext_C -depth 29 -baseWidth 64 -cardinality 16 -weightDecay 5e-4 -batchSize 128 -nGPU 8 -nThreads 8 -shareGradInput true
-```
+    ```bash
+    th main.lua -dataset cifar10 -bottleneckType resnext_C -depth 29 -baseWidth 64 -cardinality 16 -weightDecay 5e-4 -batchSize 128 -nGPU 8 -nThreads 8 -shareGradInput true
+    ```
 
 ### Demo
 

@@ -43,7 +43,7 @@ if( ~exist(output_dir, 'dir') )
 end
 
 addpath(genpath('utils'));
-addpath(fullfile(pwd, 'matconvnet-1.0-beta24/matlab'));
+addpath(fullfile(pwd, 'matconvnet/matlab'));
 vl_setupnn;
 
 %% load model

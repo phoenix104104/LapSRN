@@ -30,7 +30,7 @@ function train_LapSRN(scale, depth, gpu)
 
     %% setup paths
     addpath(genpath('utils'));
-    addpath(fullfile(pwd, 'matconvnet-1.0-beta24/matlab'));
+    addpath(fullfile(pwd, 'matconvnet/matlab'));
     vl_setupnn;
 
     %% initialize network

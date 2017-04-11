@@ -22,7 +22,7 @@ opts.gpu    = 1; % GPU ID
 
 %% setup paths
 addpath(genpath('utils'));
-addpath(fullfile(pwd, 'matconvnet-1.0-beta24/matlab'));
+addpath(fullfile(pwd, 'matconvnet/matlab'));
 vl_setupnn;
 
 %% Load pretrained odel

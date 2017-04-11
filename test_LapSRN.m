@@ -33,7 +33,7 @@ function test_LapSRN(model_scale, depth, gpu, dataset, test_scale, epoch)
     
     %% setup paths
     addpath(genpath('utils'));
-    addpath(fullfile(pwd, 'matconvnet-1.0-beta24/matlab'));
+    addpath(fullfile(pwd, 'matconvnet/matlab'));
     vl_setupnn;
     
     input_dir = fullfile('datasets', dataset, 'GT');

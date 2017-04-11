@@ -106,7 +106,7 @@ function inputs = getBatch_LapSRN(opts, imdb, batch, mode)
 	inputs{end+1} = imresize(HR, 1 / opts.scale);
     
     % convert to GPU array
-    if( numel(opts.gpus) > 0 )
+    if( opts.gpu > 0 )
         for i = 2:2:length(inputs)
             inputs{i} = gpuArray(inputs{i});
         end

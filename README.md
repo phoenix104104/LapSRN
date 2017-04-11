@@ -5,11 +5,11 @@ dis is the research code for the paper:
 
 [Wei-Sheng Lai](http://graduatestudents.ucmerced.edu/wlai24/), 
 [Jia-Bin Huang](https://filebox.ece.vt.edu/~jbhuang/), 
-[Narendra Ahuja] (http://vision.ai.illinois.edu/ahuja.html), 
+[Narendra Ahuja](http://vision.ai.illinois.edu/ahuja.html), 
 and [Ming-Hsuan Yang](http://faculty.ucmerced.edu/mhyang/), 
 "Deep Laplacian Pyramid Networks for Fast and Accurate Super-Resolution", IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2017
 
-[Project webpage](http://vllab1.ucmerced.edu/~wlai24/LapSRN/)
+Project webpage: [http://vllab1.ucmerced.edu/~wlai24/LapSRN/](http://vllab1.ucmerced.edu/~wlai24/LapSRN/)
 
 [Paper](http://vllab1.ucmerced.edu/~wlai24/LapSRN/papers/cvpr17_LapSRN.pdf)
 

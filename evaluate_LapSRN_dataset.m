@@ -14,12 +14,12 @@
 % -------------------------------------------------------------------------
 
 %% testing options
-model_scale = 2;            % pretrained model upsampling scale
-% dataset     = 'Set5';
+model_scale = 4;            % pretrained model upsampling scale
+dataset     = 'Set5';
 % dataset     = 'Set14';
 % dataset     = 'BSDS100';
 % dataset     = 'urban100';
-dataset     = 'manga109';
+% dataset     = 'manga109';
 test_scale  = model_scale;  % testing scale can be different from model scale
 gpu         = 1;            % GPU ID, gpu = 0 for CPU mode
 compute_ifc = 1;            % IFC calculation is slow, enable when needed

@@ -68,7 +68,26 @@ Then choose the evaluated dataset and upsampling scale in evaluate_LapSRN_datase
 
     >> evaluate_LapSRN_dataset
 
+which can reproduce the results in our paper Table 4.
+
+
 ### Training
 
+To train LapSRN from scratch, first download the training datasets:
 
+    $ cd datasets
+    $ wget http://vllab1.ucmerced.edu/~wlai24/LapSRN/results/SR_training_datasets.zip
+    $ unzip SR_train_datasets.zip
+    $ cd ..
+
+or use the provided bash script to download all datasets and unzip at once:
+
+    $ cd datasets
+    $ ./download_SR_datasets.sh
+    $ cd ..
+
+Then, setup training options in init_opts.m, and run train_LapSRN.m. For example, to train LapSRN with depth = 10 for 4x SR using GPU ID = 1:
+
+    >> train_LapSRN(4, 10, 1)
+    
 ### Testing

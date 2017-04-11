@@ -2,7 +2,7 @@ classdef vllab_dag_loss < dagnn.Loss
 % -------------------------------------------------------------------------
 %   Description:
 %       loss object for dagnn class
-%       please copy this file to matconvnet/matlab/+dagnn
+%       if using your own MatConvNet version, copy this file to [matconvnet]/matlab/+dagnn
 %
 %   Parameters:
 %       - lambda    : weight of loss

@@ -86,8 +86,16 @@ or use the provided bash script to download all datasets and unzip at once:
     $ ./download_SR_datasets.sh
     $ cd ..
 
-Then, setup training options in init_opts.m, and run train_LapSRN.m. For example, to train LapSRN with depth = 10 for 4x SR using GPU ID = 1:
+Then, setup training options in init_opts.m, and run train_LapSRN(scale, depth, gpuID). For example, to train LapSRN with depth = 10 for 4x SR using GPU ID = 1:
 
     >> train_LapSRN(4, 10, 1)
     
+Note that we only test our code on single-GPU mode. MatConvNet supports training with multiple GPUs but you may need to modify our script and options (e.g., opts.gpu).
+
+    
 ### Testing
+
+To test your own LapSRN model epoch 10 on Set5:
+
+    >> test_LapSRN(4, 10, 1, 'Set5', 4, 10)
+

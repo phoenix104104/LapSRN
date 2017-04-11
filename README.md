@@ -1,13 +1,15 @@
 # LapSRN
 
 ### Introduction
-dis is the research code for the paper:
+This is the research code for the paper:
 
 [Wei-Sheng Lai](http://graduatestudents.ucmerced.edu/wlai24/), 
 [Jia-Bin Huang](https://filebox.ece.vt.edu/~jbhuang/), 
 [Narendra Ahuja](http://vision.ai.illinois.edu/ahuja.html), 
 and [Ming-Hsuan Yang](http://faculty.ucmerced.edu/mhyang/), 
 "Deep Laplacian Pyramid Networks for Fast and Accurate Super-Resolution", IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2017
+
+![teaser](http://vllab1.ucmerced.edu/~wlai24/LapSRN/images/emma_v3_32x.gif)
 
 Project webpage: [http://vllab1.ucmerced.edu/~wlai24/LapSRN/](http://vllab1.ucmerced.edu/~wlai24/LapSRN/)
 

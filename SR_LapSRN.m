@@ -1,5 +1,27 @@
 function img_HR = SR_LapSRN(img_LR, net, opts)
-    
+% -------------------------------------------------------------------------
+%   Description:
+%       function to apply LapSRN
+%
+%   Input:
+%       - img_LR: low-resolution image
+%       - net   : LapSRN model
+%       - opts  : options generated from init_opts()
+%
+%   Output:
+%       - img_HR: high-resolution image
+%
+%   Citation: 
+%       Deep Laplacian Pyramid Networks for Fast and Accurate Super-Resolution
+%       Wei-Sheng Lai, Jia-Bin Huang, Narendra Ahuja, and Ming-Hsuan Yang
+%       IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2017
+%
+%   Contact:
+%       Wei-Sheng Lai
+%       wlai24@ucmerced.edu
+%       University of California, Merced
+% -------------------------------------------------------------------------
+
     %% setup
     net.mode = 'test' ;
     output_var = 'level1_output';

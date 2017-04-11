@@ -1,4 +1,22 @@
 function make_imdb(imdb_filename, opts)
+% -------------------------------------------------------------------------
+%   Description:
+%       generate imdb file for training LapSRN
+%
+%   Input:
+%       - imdb_filename : imdb file name
+%       - opts : options generated from init_opts()
+%
+%   Citation: 
+%       Deep Laplacian Pyramid Networks for Fast and Accurate Super-Resolution
+%       Wei-Sheng Lai, Jia-Bin Huang, Narendra Ahuja, and Ming-Hsuan Yang
+%       IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2017
+%
+%   Contact:
+%       Wei-Sheng Lai
+%       wlai24@ucmerced.edu
+%       University of California, Merced
+% -------------------------------------------------------------------------
 
     addpath('utils');
 

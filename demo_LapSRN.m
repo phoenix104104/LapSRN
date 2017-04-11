@@ -1,10 +1,24 @@
 clear all;
+% -------------------------------------------------------------------------
+%   Description:
+%       Script to demo LapSRN for one image
+%
+%   Citation: 
+%       Deep Laplacian Pyramid Networks for Fast and Accurate Super-Resolution
+%       Wei-Sheng Lai, Jia-Bin Huang, Narendra Ahuja, and Ming-Hsuan Yang
+%       IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2017
+%
+%   Contact:
+%       Wei-Sheng Lai
+%       wlai24@ucmerced.edu
+%       University of California, Merced
+% -------------------------------------------------------------------------
 
 img_filename = 'emma.jpg';
 
 %% parameters
-opts.gpu    = 1;
-opts.scale  = 4;
+opts.scale  = 4; % SR upsampling scale
+opts.gpu    = 1; % GPU ID
 
 %% setup paths
 addpath(genpath('utils'));

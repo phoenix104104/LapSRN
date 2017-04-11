@@ -1,6 +1,29 @@
-function inputs = getBatch_multiscale(opts, imdb, batch, mode)
+function inputs = getBatch_LapSRN(opts, imdb, batch, mode)
+% -------------------------------------------------------------------------
+%   Description:
+%       get one batch for training LapSRN
+%
+%   Input:
+%       - opts  : options generated from init_opts()
+%       - imdb  : imdb file generated from make_imdb()
+%       - batch : array of ID to fetch
+%       - mode  : 'train' or 'val'
+%
+%   Output:
+%       - inputs: input for dagnn (include LR and HR images)
+%
+%   Citation: 
+%       Deep Laplacian Pyramid Networks for Fast and Accurate Super-Resolution
+%       Wei-Sheng Lai, Jia-Bin Huang, Narendra Ahuja, and Ming-Hsuan Yang
+%       IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2017
+%
+%   Contact:
+%       Wei-Sheng Lai
+%       wlai24@ucmerced.edu
+%       University of California, Merced
+% -------------------------------------------------------------------------
 
-    %% load images
+    %% get images
     image_batch = imdb.images.img(batch);
     
     %% crop
@@ -68,7 +91,7 @@ function inputs = getBatch_multiscale(opts, imdb, batch, mode)
 
     end % end of data augmentation
     
-    
+    %% make dagnn input
     inputs = {};
     inputs{end+1} = 'level1_HR';
 	inputs{end+1} = HR;
@@ -82,7 +105,7 @@ function inputs = getBatch_multiscale(opts, imdb, batch, mode)
     inputs{end+1} = 'LR';
 	inputs{end+1} = imresize(HR, 1 / opts.scale);
     
-    
+    % convert to GPU array
     if( numel(opts.gpus) > 0 )
         for i = 2:2:length(inputs)
             inputs{i} = gpuArray(inputs{i});

@@ -1,7 +1,34 @@
 function test_LapSRN(model_scale, depth, gpu, dataset, test_scale, epoch)
+% -------------------------------------------------------------------------
+%   Description:
+%       Script to test LapSRN on benchmark datasets
+%       Compute PSNR, SSIM and IFC
+%
+%   Input:
+%       - model_scale   : model SR scale
+%       - depth         : model depth
+%       - gpu           : GPU ID
+%       - dataset       : testing dataset (Set5, Set14, BSDS100, urban100, manga109)
+%       - test_scale    : testing SR scale (could be different from model scale)
+%       - epoch         : model epoch to test
+%
+%   Citation: 
+%       Deep Laplacian Pyramid Networks for Fast and Accurate Super-Resolution
+%       Wei-Sheng Lai, Jia-Bin Huang, Narendra Ahuja, and Ming-Hsuan Yang
+%       IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2017
+%
+%   Contact:
+%       Wei-Sheng Lai
+%       wlai24@ucmerced.edu
+%       University of California, Merced
+% -------------------------------------------------------------------------
     
+    if( test_scale < model_scale )
+        error('Test scale must be greater than or equal to model scale (%d vs %d)', ...
+            test_scale, model_scale);
+    end
 
-    %% opts
+    %% generate opts
     opts = init_opts(model_scale, depth, gpu);
     
     %% setup paths

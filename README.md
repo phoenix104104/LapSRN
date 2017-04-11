@@ -7,12 +7,13 @@ and [Ming-Hsuan Yang](http://faculty.ucmerced.edu/mhyang/)
 IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2017
 
 ### Table of Contents
-0. [Introduction](#introduction)
-0. [Citation](#citation)
-0. [Requirements and Dependencies](#requirements-and-dependencies)
-0. [Installation](#installation)
-0. [Training](#training)
-0. [Testing](#testing)
+1. [Introduction](#introduction)
+1. [Citation](#citation)
+1. [Requirements and Dependencies](#requirements-and-dependencies)
+1. [Installation](#installation)
+1. [Training](#training)
+1. [Demo](#demo)
+1. [Testing](#testing)
 
 ### Introduction
 The Laplacian Pyramid Super-Resolution Network (LapSRN) is a progressive super-resolution model that super-resolves an low-resolution images in a coarse-to-fine Laplacian pyramid framework.

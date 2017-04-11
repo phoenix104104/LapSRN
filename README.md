@@ -4,6 +4,7 @@
 [Jia-Bin Huang](https://filebox.ece.vt.edu/~jbhuang/), 
 [Narendra Ahuja](http://vision.ai.illinois.edu/ahuja.html), 
 and [Ming-Hsuan Yang](http://faculty.ucmerced.edu/mhyang/)
+
 IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2017
 
 ### Table of Contents

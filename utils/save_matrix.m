@@ -1,11 +1,28 @@
-function save_matrix(Q, filename, precision, print_message)
-    
+function save_matrix(Q, filename, precision)
+% -------------------------------------------------------------------------
+%   Description:
+%       save a 2D array into text file
+%
+%   Input:
+%       - Q         : input matrix (2D array)
+%       - filename  : output file name
+%       - precision : float point precision [default = 7]
+%
+%   Citation: 
+%       Deep Laplacian Pyramid Networks for Fast and Accurate Super-Resolution
+%       Wei-Sheng Lai, Jia-Bin Huang, Narendra Ahuja, and Ming-Hsuan Yang
+%       IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2017
+%
+%   Contact:
+%       Wei-Sheng Lai
+%       wlai24@ucmerced.edu
+%       University of California, Merced
+% -------------------------------------------------------------------------
+
     if( ~exist('precision', 'var') )
         precision = 7;
     end
-    if( ~exist('print_message', 'var') )
-        print_message = 0;
-    end
+    
     file = fopen(filename, 'w');
     
     if( size(Q, 2) == 1 )
@@ -19,7 +36,4 @@ function save_matrix(Q, filename, precision, print_message)
     end
     fclose(file);
     
-    if( print_message )
-        fprintf('Save %s\n', filename);
-    end
 end

@@ -3,8 +3,8 @@
 [Wei-Sheng Lai](http://graduatestudents.ucmerced.edu/wlai24/), 
 [Jia-Bin Huang](https://filebox.ece.vt.edu/~jbhuang/), 
 [Narendra Ahuja](http://vision.ai.illinois.edu/ahuja.html), 
-and [Ming-Hsuan Yang](http://faculty.ucmerced.edu/mhyang/), 
-"Deep Laplacian Pyramid Networks for Fast and Accurate Super-Resolution", IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2017
+and [Ming-Hsuan Yang](http://faculty.ucmerced.edu/mhyang/)
+IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2017
 
 ### Table of Contents
 0. [Introduction](#introduction)
@@ -41,13 +41,14 @@ If you find the code and datasets useful in your research, please cite:
 
 ### Installation
 
-    cd $WSL_ROOT
     # Start MATLAB
-    matlab
-    >> startup
-    
+    $ matlab
+    >> install
+   
+This script will copy vllab_dag_loss.m to matconvnet/matlab/+dagnn and run vl_compilenn to setup matconvnet.
 
-### Demo
+
+### Quick Demo
 
 
 ### Training

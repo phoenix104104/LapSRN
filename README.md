@@ -11,8 +11,8 @@ IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2017
 1. [Citation](#citation)
 1. [Requirements and Dependencies](#requirements-and-dependencies)
 1. [Installation](#installation)
-1. [Training](#training)
 1. [Demo](#demo)
+1. [Training](#training)
 1. [Testing](#testing)
 
 ### Introduction
@@ -56,6 +56,12 @@ To test LapSRN on a single-image:
     >> demo_LapSRN
 
 This script will load the pretrained LapSRN model and apply SR on emma.jpg.
+
+To test LapSRN on benchmark datasets, first download the testing datasets into sub-folder ``datasets''
+
+    $ cd datasets
+    $ wget http://vllab1.ucmerced.edu/~wlai24/LapSRN/results/SR_testing_datasets.zip
+    $ unzip SR_testing_datasets.zip
 
 ### Training
 

@@ -48,8 +48,13 @@ If you find the code and datasets useful in your research, please cite:
 This script will copy vllab_dag_loss.m to matconvnet/matlab/+dagnn and run vl_compilenn to setup matconvnet.
 
 
-### Quick Demo
+### Demo
 
+To test LapSRN on a single-image:
+
+    >> demo_LapSRN
+
+This script will load the pretrained LapSRN model and apply SR on emma.jpg.
 
 ### Training
 

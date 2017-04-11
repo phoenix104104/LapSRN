@@ -14,15 +14,15 @@
 % -------------------------------------------------------------------------
 
 %% testing options
-model_scale = 4;            % pretrained model upsampling scale
-dataset     = 'Set5';
+model_scale = 2;            % pretrained model upsampling scale
+% dataset     = 'Set5';
 % dataset     = 'Set14';
 % dataset     = 'BSDS100';
 % dataset     = 'urban100';
-% dataset     = 'manga109';
+dataset     = 'manga109';
 test_scale  = model_scale;  % testing scale can be different from model scale
 gpu         = 1;            % GPU ID, gpu = 0 for CPU mode
-
+compute_ifc = 1;            % IFC calculation is slow, enable when needed
 
 if( test_scale < model_scale )
     error('Test scale must be greater than or equal to model scale (%d vs %d)', ...
@@ -79,20 +79,28 @@ for i = 1:num_img
     input_filename = fullfile(input_dir, sprintf('%s.png', img_name));
     img_GT = im2double(imread(input_filename));
     img_GT = mod_crop(img_GT, test_scale);
-    
-    % generate LR image
-    img_LR = imresize(img_GT, 1/test_scale, 'bicubic');
-    
-    % apply LapSRN
-    img_HR = SR_LapSRN(img_LR, net, opts);
-    
-    % save result
+
     output_filename = fullfile(output_dir, sprintf('%s.png', img_name));
-    fprintf('Save %s\n', output_filename);
-    imwrite(img_HR, output_filename);
+    
+    if( ~exist(output_filename, 'file') )
+
+        % generate LR image
+        img_LR = imresize(img_GT, 1/test_scale, 'bicubic');
+
+        % apply LapSRN
+        img_HR = SR_LapSRN(img_LR, net, opts);
+
+        % save result
+        fprintf('Save %s\n', output_filename);
+        imwrite(img_HR, output_filename);
+        
+    else
+        fprintf('Load %s\n', output_filename);
+        img_HR = imread(output_filename);
+    end
     
     %% evaluate
-    img_HR = im2double(im2uint8(img_HR)); % quantize pixel values
+    img_HR = im2double(im2uint8(img_HR)); % quantize to uint8
     
     % convert to gray scale
     img_GT = rgb2ycbcr(img_GT); img_GT = img_GT(:, :, 1);
@@ -106,9 +114,11 @@ for i = 1:num_img
     PSNR(i) = psnr(img_GT, img_HR);
     SSIM(i) = ssim(img_GT, img_HR);
     
-    IFC(i) = ifcvec(img_GT, img_HR);
-    if( ~isreal(IFC(i)) )
-        IFC(i) = 0;
+    if( compute_ifc )
+        IFC(i) = ifcvec(img_GT, img_HR);
+        if( ~isreal(IFC(i)) )
+            IFC(i) = 0;
+        end
     end
     
 end

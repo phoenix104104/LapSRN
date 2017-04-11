@@ -99,3 +99,4 @@ Use `test_LapSRN(model_scale, depth, gpu, dataset, test_scale, epoch)` to test y
 
     >> test_LapSRN(4, 10, 1, 'Set5', 4, 10)
 
+which will report the PSNR, SSIM and IFC.

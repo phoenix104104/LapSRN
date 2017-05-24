@@ -49,6 +49,7 @@ If you find the code and datasets useful in your research, please cite:
    
 This script will copy `vllab_dag_loss.m` to `matconvnet/matlab/+dagnn` and run `vl_compilenn` to setup matconvnet.
 
+**Note**: `vllab_dag_loss.m` may not be properly copied on some systems (e.g., Windows 10). You need to manually copy it to `matconvnet/matlab/+dagnn`.
 
 ### Demo
 

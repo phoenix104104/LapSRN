@@ -47,6 +47,7 @@ First, copy `vllab_dag_loss.m` to your `[MatConvNet path]/matlab/+dagnn`. Our de
     $ cp vllab_dag_loss.m matconvnet/matlab/+dagnn
 
 Then, run install.m in MATLAB:
+
     # Start MATLAB
     $ matlab
     >> install

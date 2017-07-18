@@ -42,14 +42,16 @@ If you find the code and datasets useful in your research, please cite:
 - [MatConvNet](http://www.vlfeat.org/matconvnet/)
 
 ### Installation
+First, copy `vllab_dag_loss.m` to your `[MatConvNet path]/matlab/+dagnn`. Our default path is `matconvent/matlab/+dagnn`.
 
+    $ cp vllab_dag_loss.m matconvnet/matlab/+dagnn
+
+Then, run install.m in MATLAB:
     # Start MATLAB
     $ matlab
     >> install
    
-This script will copy `vllab_dag_loss.m` to `matconvnet/matlab/+dagnn` and run `vl_compilenn` to setup matconvnet.
-
-**Note**: `vllab_dag_loss.m` may not be properly copied on some systems (e.g., Windows 10). You need to manually copy it to `matconvnet/matlab/+dagnn`.
+If you install MatConvNet in your own path, you need to change the corresponding path in `install.m`, `train_LapSRN.m` and `test_LapSRN.m`.
 
 ### Demo
 

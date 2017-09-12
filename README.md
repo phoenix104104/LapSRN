@@ -42,11 +42,15 @@ If you find the code and datasets useful in your research, please cite:
 - [MatConvNet](http://www.vlfeat.org/matconvnet/)
 
 ### Installation
-First, copy `vllab_dag_loss.m` to your `[MatConvNet path]/matlab/+dagnn`. Our default path is `matconvent/matlab/+dagnn`.
+Download repository:
+
+    $ git clone --recursive https://github.com/phoenix104104/LapSRN.git
+
+Copy `vllab_dag_loss.m` to your `[MatConvNet path]/matlab/+dagnn`. Our default path is `matconvent/matlab/+dagnn`.
 
     $ cp vllab_dag_loss.m matconvnet/matlab/+dagnn
 
-Then, run install.m in MATLAB:
+Run install.m in MATLAB:
 
     # Start MATLAB
     $ matlab

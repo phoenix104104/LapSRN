@@ -13,8 +13,8 @@ IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2017
 1. [Requirements and Dependencies](#requirements-and-dependencies)
 1. [Installation](#installation)
 1. [Demo](#demo)
-1. [Training](#training)
-1. [Testing](#testing)
+1. [Training LapSRN](#training-LapSRN)
+1. [Training MS-LapSRN](#training-MS-LapSRN)
 
 ### Introduction
 The Laplacian Pyramid Super-Resolution Network (LapSRN) is a progressive super-resolution model that super-resolves an low-resolution images in a coarse-to-fine Laplacian pyramid framework.
@@ -102,5 +102,18 @@ Note that we only test our code on single-GPU mode. MatConvNet supports training
 To test your trained LapSRN model, use `test_LapSRN(model_name, epoch, dataset, test_scale, gpu)`. For example, test LapSRN with depth = 10, scale = 4, epoch = 10 on Set5:
 
     >> test_LapSRN('LapSRN_x4_depth10_L1_train_T91_BSDS200_pw128_lr1e-05_step50_drop0.5_min1e-06_bs64', 10, 'Set5', 4, 1)
+
+which will report the PSNR and SSIM.
+
+
+### Training MS-LapSRN
+
+Setup training options in `init_MSLapSRN_opts.m`, and run `train_MSLapSRN(scales, depth, recursive, gpuID)`, where `scales` should be a vector, e.g., [2, 4, 8]. For example, to train MS-LapSRN with D = 5, R = 2 for 2x, 4x and 8x SR:
+
+    >> train_MSLapSRN([2, 4, 8], 5, 2, 1)
+    
+To test your trained MS-LapSRN model, use `test_MS-LapSRN(model_name, model_scale, epoch, dataset, test_scale, gpu)`, where `model_scale` is used to define the number of pyramid levels. `test_scale` could be different from `model_scale`. For example, test MS-LapSRN-D5R2 with two pyramid levels (`model_scale = 4`), epoch = 10, on Set5 for scale = 3:
+
+    >> test_MSLapSRN('MSLapSRN_x248_SS_D5_R2_fn64_L1_train_T91_BSDS200_pw128_lr5e-06_step100_drop0.5_min1e-06_bs64', 4, 10, 'Set5', 3, 1)
 
 which will report the PSNR and SSIM.

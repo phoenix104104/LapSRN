@@ -38,19 +38,15 @@ If you find the code and datasets useful in your research, please cite:
     
 
 ### Requirements and Dependencies
-- MATLAB (we test with MATLAB R2015a on Ubuntu 14.04 and Windows 7)
-- [MatConvNet](http://www.vlfeat.org/matconvnet/)
+- MATLAB (we test with MATLAB R2017a on Ubuntu 16.04 and Windows 7)
+- Cuda & Cudnn (we test with Cuda 8.0 and Cudnn 5.1)
 
 ### Installation
 Download repository:
 
-    $ git clone --recursive https://github.com/phoenix104104/LapSRN.git
+    $ git clone https://github.com/phoenix104104/LapSRN.git
 
-Copy `vllab_dag_loss.m` to your `[MatConvNet path]/matlab/+dagnn`. Our default path is `matconvent/matlab/+dagnn`.
-
-    $ cp vllab_dag_loss.m matconvnet/matlab/+dagnn
-
-Run install.m in MATLAB:
+Run install.m in MATLAB to compile MatConvNet:
 
     # Start MATLAB
     $ matlab
@@ -60,27 +56,29 @@ If you install MatConvNet in your own path, you need to change the corresponding
 
 ### Demo
 
-To test LapSRN on a single-image:
+To test LapSRN / MS-LapSRN on a single-image:
 
     >> demo_LapSRN
+    >> demo_MSLapSRN
 
-This script will load the pretrained LapSRN model and apply SR on emma.jpg.
+This script will load the pretrained LapSRN / MS-LapSRN model and apply SR on emma.jpg.
 
-To test LapSRN on benchmark datasets, first download the testing datasets:
+To test LapSRN / MS-LapSRN on benchmark datasets, first download the testing datasets:
 
     $ cd datasets
     $ wget http://vllab1.ucmerced.edu/~wlai24/LapSRN/results/SR_testing_datasets.zip
     $ unzip SR_testing_datasets.zip
     $ cd ..
 
-Then choose the evaluated dataset and upsampling scale in `evaluate_LapSRN_dataset.m` and run:
+Then choose the evaluated dataset and upsampling scale in `evaluate_LapSRN_dataset.m` and `evaluate_MSLapSRN_dataset.m`, and run:
 
     >> evaluate_LapSRN_dataset
+    >> evaluate_MSLapSRN_dataset
 
-which can reproduce the results in our paper Table 4.
+which can reproduce the results in our paper.
 
 
-### Training
+### Training LapSRN
 
 To train LapSRN from scratch, first download the training datasets:
 
@@ -95,17 +93,14 @@ or use the provided bash script to download all datasets and unzip at once:
     $ ./download_SR_datasets.sh
     $ cd ..
 
-Then, setup training options in `init_opts.m`, and run `train_LapSRN(scale, depth, gpuID)`. For example, to train LapSRN with depth = 10 for 4x SR using GPU ID = 1:
+Then, setup training options in `init_LapSRN_opts.m`, and run `train_LapSRN(scale, depth, gpuID)`. For example, to train LapSRN with depth = 10 for 4x SR using GPU ID = 1:
 
     >> train_LapSRN(4, 10, 1)
     
 Note that we only test our code on single-GPU mode. MatConvNet supports training with multiple GPUs but you may need to modify our script and options (e.g., `opts.gpu`).
 
-    
-### Testing
+To test your trained LapSRN model, use `test_LapSRN(model_name, epoch, dataset, test_scale, gpu)`. For example, test LapSRN with depth = 10, scale = 4, epoch = 10 on Set5:
 
-Use `test_LapSRN(model_scale, depth, gpu, dataset, test_scale, epoch)` to test your own LapSRN model. For example, test LapSRN with depth = 10, scale = 4, epoch = 10 on Set5:
+    >> test_LapSRN('LapSRN_x4_depth10_L1_train_T91_BSDS200_pw128_lr1e-05_step50_drop0.5_min1e-06_bs64', 10, 'Set5', 4, 1)
 
-    >> test_LapSRN(4, 10, 1, 'Set5', 4, 10)
-
-which will report the PSNR, SSIM and IFC.
+which will report the PSNR and SSIM.

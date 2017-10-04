@@ -1,6 +1,13 @@
+function N = count_network_parameters(net)
 % -------------------------------------------------------------------------
 %   Description:
-%       Script to compile matconvnet
+%       Count the total number of network parameters
+%
+%   Input:
+%       - net   : network
+%
+%   Output:
+%       - N     : #parameters
 %
 %   Citation: 
 %       Fast and Accurate Image Super-Resolution with Deep Laplacian Pyramid Networks
@@ -13,6 +20,12 @@
 %       University of California, Merced
 % -------------------------------------------------------------------------
 
-addpath('matconvnet/matlab');
-vl_compilenn('enableGPu', true, 'enableCudnn', true);
+    N = 0;
+    for i = 1:length(net.params)
 
+        N = N + numel(net.params(i).value);
+
+    end
+
+
+end

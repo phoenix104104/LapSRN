@@ -1,7 +1,7 @@
-function opts = init_opts(scale, depth, gpu)
+function opts = init_LapSRN_opts(scale, depth, gpu)
 % -------------------------------------------------------------------------
 %   Description:
-%       Generate all options for LapSRN
+%       Generate model options for LapSRN
 %
 %   Input:
 %       - scale : SR upsampling scale
@@ -9,7 +9,7 @@ function opts = init_opts(scale, depth, gpu)
 %       - gpu   : GPU ID, 0 for CPU mode
 %
 %   Output:
-%       - opts  : all options for LapSRN
+%       - opts  : options for LapSRN
 %
 %   Citation: 
 %       Deep Laplacian Pyramid Networks for Fast and Accurate Super-Resolution
@@ -34,7 +34,7 @@ function opts = init_opts(scale, depth, gpu)
     %% training options
     opts.gpu                = gpu;
     opts.batch_size         = 64;
-    opts.num_train_batch    = 1000;     % number of training batch in one epoch
+    opts.num_train_batch    = 100;     % number of training batch in one epoch
     opts.num_valid_batch    = 100;      % number of validation batch in one epoch
     opts.lr                 = 1e-5;     % initial learning rate
     opts.lr_step            = 50;       % number of epochs to drop learning rate
@@ -42,6 +42,7 @@ function opts = init_opts(scale, depth, gpu)
     opts.lr_min             = 1e-6;     % minimum learning rate
     opts.patch_size         = 128;
     opts.data_augmentation  = 1;
+    opts.scale_augmentation = 1;
 
     %% dataset options
     opts.train_dataset          = {};
@@ -49,8 +50,8 @@ function opts = init_opts(scale, depth, gpu)
     opts.train_dataset{end+1}   = 'BSDS200';
     %opts.train_dataset{end+1}   = 'General100';
     opts.valid_dataset          = {};
-    opts.valid_dataset{end+1}   = 'Set5';
-    opts.valid_dataset{end+1}   = 'Set14';
+    %opts.valid_dataset{end+1}   = 'Set5';
+    %opts.valid_dataset{end+1}   = 'Set14';
     opts.valid_dataset{end+1}   = 'BSDS100';
 
 
@@ -63,11 +64,12 @@ function opts = init_opts(scale, depth, gpu)
     opts.net_name = sprintf('LapSRN_x%d_depth%d_%s', ...
                             opts.scale, opts.depth, opts.loss);
 
-    opts.model_name = sprintf('%s_%s_pw%d_lr%s_step%d_drop%s_min%s', ...
+    opts.model_name = sprintf('%s_%s_pw%d_lr%s_step%d_drop%s_min%s_bs%d', ...
                             opts.net_name, ...
                             opts.data_name, opts.patch_size, ...
                             num2str(opts.lr), opts.lr_step, ...
-                            num2str(opts.lr_drop), num2str(opts.lr_min));
+                            num2str(opts.lr_drop), num2str(opts.lr_min), ...
+                            opts.batch_size);
 
 
     %% setup dagnn training parameters

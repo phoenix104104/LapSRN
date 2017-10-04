@@ -1,7 +1,8 @@
-function inputs = getBatch_LapSRN(opts, imdb, batch, mode)
+function inputs = getBatch_MSLapSRN(opts, imdb, batch, mode)
 % -------------------------------------------------------------------------
 %   Description:
-%       get one batch for training LapSRN
+%       get one batch for training MS-LapSRN
+%       We equally split a batch for multiple scales (opts.scales)
 %
 %   Input:
 %       - opts  : options generated from init_opts()
@@ -13,9 +14,9 @@ function inputs = getBatch_LapSRN(opts, imdb, batch, mode)
 %       - inputs: input for dagnn (include LR and HR images)
 %
 %   Citation: 
-%       Deep Laplacian Pyramid Networks for Fast and Accurate Super-Resolution
+%       Fast and Accurate Image Super-Resolution with Deep Laplacian Pyramid Networks
 %       Wei-Sheng Lai, Jia-Bin Huang, Narendra Ahuja, and Ming-Hsuan Yang
-%       IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2017
+%       arXiv, 2017
 %
 %   Contact:
 %       Wei-Sheng Lai
@@ -90,23 +91,38 @@ function inputs = getBatch_LapSRN(opts, imdb, batch, mode)
     
     %% dagnn input
     inputs = {};
-    inputs{end+1} = 'level1_HR';
-	inputs{end+1} = HR;
-    
-    for i = 2 : opts.level
-        ratio = 1 / 2^(i - 1);
-        inputs{end+1} = sprintf('level%d_HR', i);
-        inputs{end+1} = imresize(HR, ratio);
+
+    split_size = ceil(length(batch) / length(opts.scales));
+    st = (0 : length(opts.scales) - 1) * split_size + 1;
+    ed = min((1 : length(opts.scales)) * split_size, length(batch));
+
+    for s = 1:length(opts.scales)
+        
+        scale = opts.scales(s);
+        level = ceil(log(scale) / log(2));
+
+        HR_split = HR(:, :, :, st(s) : ed(s));
+        
+        % LR
+        inputs{end + 1} = sprintf('x%dSR_LR', scale);
+        inputs{end + 1} = imresize(HR_split, 1 / scale, 'bicubic');
+
+        % intermediate HR
+        for l = 1 : level - 1
+            inputs{end + 1} = sprintf('x%dSR_%dx_HR', scale, 2^l);
+            inputs{end + 1} = imresize(HR_split, 1 / 2^(level - l), 'bicubic');
+        end
+
+        % HR
+        inputs{end + 1} = sprintf('x%dSR_%dx_HR', scale, scale);
+        inputs{end + 1} = HR_split;
+
     end
-    
-    inputs{end+1} = 'LR';
-	inputs{end+1} = imresize(HR, 1 / opts.scale);
-    
+
     %% convert to GPU array
     if( opts.gpu > 0 )
         for i = 2:2:length(inputs)
             inputs{i} = gpuArray(inputs{i});
         end
     end
-    
 end

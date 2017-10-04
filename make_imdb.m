@@ -46,7 +46,7 @@ function make_imdb(imdb_filename, opts)
             if( ~exist(filename, 'file') )
                 error('%s does not exist!\n', filename);
             end
-            train_list{i} = filename;
+            train_list{end + 1} = filename;
         end
 
     end
@@ -58,7 +58,7 @@ function make_imdb(imdb_filename, opts)
 
     for d = 1:length(opts.valid_dataset)
 
-        image_dir   = fullfile('datasets', opts.valid_dataset{d}, 'GT');
+        image_dir   = fullfile('datasets', opts.valid_dataset{d});
         list_filename = fullfile(list_dir, sprintf('%s.txt', opts.valid_dataset{d}));
         image_list = load_list(list_filename);
         num_image = length(image_list);
@@ -70,7 +70,7 @@ function make_imdb(imdb_filename, opts)
             if( ~exist(filename, 'file') )
                 error('%s does not exist!\n', filename);
             end
-            valid_list{i} = filename;
+            valid_list{end + 1} = filename;
         end
 
     end

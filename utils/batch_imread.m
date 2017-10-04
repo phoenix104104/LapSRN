@@ -24,8 +24,11 @@ function img_list = batch_imread(batch)
     
     for i = 1:length(batch)
          img = imread(batch{i});
-         img = rgb2ycbcr(img);
-         img = img(:, :, 1);
+         
+         if( size(img, 3) > 1 )
+             img = rgb2ycbcr(img);
+             img = img(:, :, 1);
+         end
          
          img_list{i} = im2single(img);
     end

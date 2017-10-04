@@ -1,21 +1,22 @@
-function [img_HR, time] = SR_LapSRN(img_LR, net, scale, gpu)
+function [img_HR, time] = SR_MSLapSRN(img_LR, net, model_scale, test_scale, gpu)
 % -------------------------------------------------------------------------
 %   Description:
-%       function to apply SR with LapSRN
+%       function to apply SR with MS-LapSRN
 %
 %   Input:
-%       - img_LR: low-resolution image
-%       - net   : LapSRN model
-%       - scale : upsampling scale
-%       - gpu   : GPU ID
+%       - img_LR        : low-resolution image
+%       - net           : MS-LapSRN model
+%       - model_scale   : model upsampling scale for constructing pyramid
+%       - test_scale    : image upsampling scale
+%       - gpu           : GPU ID
 %
 %   Output:
 %       - img_HR: high-resolution image
 %
 %   Citation: 
-%       Deep Laplacian Pyramid Networks for Fast and Accurate Super-Resolution
+%       Fast and Accurate Image Super-Resolution with Deep Laplacian Pyramid Networks
 %       Wei-Sheng Lai, Jia-Bin Huang, Narendra Ahuja, and Ming-Hsuan Yang
-%       IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2017
+%       arXiv, 2017
 %
 %   Contact:
 %       Wei-Sheng Lai
@@ -25,7 +26,7 @@ function [img_HR, time] = SR_LapSRN(img_LR, net, scale, gpu)
 
     %% setup
     net.mode = 'test' ;
-    output_var = 'level1_output';
+    output_var = sprintf('x%dSR_%dx_output', model_scale, model_scale);
     output_index = net.getVarIndex(output_var);
     net.vars(output_index).precious = 1;
     
@@ -42,16 +43,16 @@ function [img_HR, time] = SR_LapSRN(img_LR, net, scale, gpu)
     end
     
     % bicubic upsample UV
-    img_HR = imresize(img_LR, scale);
+    img_HR = imresize(img_LR, test_scale);
     
 
     % forward
+    inputs = {sprintf('x%dSR_LR', model_scale), y};
     tic;
-    inputs = {'LR', y};
     net.eval(inputs);
     time = toc;
-    
     y = gather(net.vars(output_index).value);
+
         
     % resize if size does not match the output image
     if( size(y, 1) ~= size(img_HR, 1) )

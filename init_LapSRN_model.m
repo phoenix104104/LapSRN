@@ -1,10 +1,10 @@
-function net = init_LapSRN(opts)
+function net = init_LapSRN_model(opts)
 % -------------------------------------------------------------------------
 %   Description:
-%       create initial LapSRN model
+%       initialize LapSRN model
 %
 %   Input:
-%       - opts  : options generated from init_opts()
+%       - opts  : options generated from init_LapSRN_opts()
 %
 %   Output:
 %       - net   : dagnn model
@@ -38,6 +38,7 @@ function net = init_LapSRN(opts)
         error('Need to specify crop in deconvolution for f = %d\n', f);
     end
     
+    %% initialize model
     net = dagnn.DagNN;
     
     

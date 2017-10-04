@@ -1,17 +1,18 @@
-function train_LapSRN(scale, depth, gpu)
+function train_MSLapSRN(scales, depth, recursive, gpu)
 % -------------------------------------------------------------------------
 %   Description:
-%       Script to train LapSRN from scratch
+%       Script to train MS-LapSRN from scratch
 %
 %   Input:
-%       - scale : SR upsampling scale
-%       - depth : numbers of conv layers in each pyramid level
-%       - gpu   : GPU ID, 0 for CPU mode
+%       - scales    : SR upsampling scales (use vector, e.g., [2, 4, 8])
+%       - depth     : numbers of conv layers in recursive block
+%       - recursive : numbers of recursive blocks
+%       - gpu       : GPU ID, 0 for CPU mode
 %
 %   Citation: 
-%       Deep Laplacian Pyramid Networks for Fast and Accurate Super-Resolution
+%       Fast and Accurate Image Super-Resolution with Deep Laplacian Pyramid Networks
 %       Wei-Sheng Lai, Jia-Bin Huang, Narendra Ahuja, and Ming-Hsuan Yang
-%       IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2017
+%       arXiv, 2017
 %
 %   Contact:
 %       Wei-Sheng Lai
@@ -21,7 +22,7 @@ function train_LapSRN(scale, depth, gpu)
 
 
     %% initialize opts
-    opts = init_LapSRN_opts(scale, depth, gpu);
+    opts = init_MSLapSRN_opts(scales, depth, recursive, gpu);
 
     %% save opts
     filename = fullfile(opts.train.expDir, 'opts.mat');
@@ -38,7 +39,7 @@ function train_LapSRN(scale, depth, gpu)
     model_filename = fullfile(opts.train.expDir, 'net-epoch-0.mat');
 
     if( ~exist(model_filename, 'file') )
-        model = init_LapSRN_model(opts);
+        model = init_MSLapSRN_model(opts, 'train');
         fprintf('Save %s\n', model_filename);
         net = model.saveobj();
         save(model_filename, 'net');
@@ -56,12 +57,13 @@ function train_LapSRN(scale, depth, gpu)
     fprintf('Load data %s\n', imdb_filename);
     imdb = load(imdb_filename);
 
-    fprintf('Pre-load all images...\n');
+    fprintf('Pre-load all images (%d training, %d validation)...\n', ...
+        length(find(imdb.images.set == 1)), length(find(imdb.images.set == 2)));
     imdb.images.img = batch_imread(imdb.images.filename);
 
     %% training
-    get_batch = @(x,y,mode) getBatch_LapSRN(opts,x,y,mode);
+    get_batch = @(x,y,mode) getBatch_MSLapSRN(opts,x,y,mode);
 
     [net, info] = vllab_cnn_train_dag(model, imdb, get_batch, opts.train, ...
-                                      'val', find(imdb.images.set == 2));
+                                    'val', find(imdb.images.set == 2));
 

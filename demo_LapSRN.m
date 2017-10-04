@@ -17,8 +17,8 @@ clear all;
 img_filename = 'emma.jpg';
 
 %% parameters
-opts.scale  = 4; % SR upsampling scale
-opts.gpu    = 1; % GPU ID
+scale  = 4; % SR upsampling scale
+gpu    = 1; % GPU ID
 
 %% setup paths
 addpath(genpath('utils'));
@@ -26,15 +26,15 @@ addpath(fullfile(pwd, 'matconvnet/matlab'));
 vl_setupnn;
 
 %% Load pretrained odel
-model_filename = fullfile('pretrained_models', sprintf('LapSRN_x%d.mat', opts.scale));
+model_filename = fullfile('pretrained_models', sprintf('LapSRN_x%d.mat', scale));
 
 fprintf('Load %s\n', model_filename);
 net = load(model_filename);
 net = dagnn.DagNN.loadobj(net.net);
 net.mode = 'test' ;
 
-if( opts.gpu ~= 0 )
-    gpuDevice(opts.gpu)
+if( gpu ~= 0 )
+    gpuDevice(gpu)
     net.move('gpu');
 end
 
@@ -42,17 +42,17 @@ end
 %% Load GT image
 fprintf('Load %s\n', img_filename);
 img_GT = im2double(imread(img_filename));
-img_GT = mod_crop(img_GT, opts.scale);
+img_GT = mod_crop(img_GT, scale);
 
 %% Generate LR image
-img_LR = imresize(img_GT, 1/opts.scale);
+img_LR = imresize(img_GT, 1/scale);
 
 %% apply LapSRN
-fprintf('Apply LapSRN for %dx SR\n', opts.scale);
-img_HR = SR_LapSRN(img_LR, net, opts);
+fprintf('Apply LapSRN for %dx SR\n', scale);
+img_HR = SR_LapSRN(img_LR, net, scale, gpu);
 
 %% show results
-img_LR = imresize(img_LR, opts.scale);
+img_LR = imresize(img_LR, scale);
 figure, imshow(cat(2, img_LR, img_HR, img_GT));
-title(sprintf('Bicubic %dx    |    LapSRN %dx    |    Ground Truth', opts.scale, opts.scale));
+title(sprintf('Bicubic %dx    |    LapSRN %dx    |    Ground Truth', scale, scale));
 

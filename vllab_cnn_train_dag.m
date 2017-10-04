@@ -1,4 +1,24 @@
 function [net,stats] = vllab_cnn_train_dag(net, imdb, getBatch, varargin)
+% -------------------------------------------------------------------------
+%   Description:
+%       Modified script for training LapSRN with dagnn
+%
+%   Input:
+%       - net       : dagnn model
+%       - imdb      : training dataset
+%       - getBatch  : function handle to get training batch
+%
+%   Citation: 
+%       Deep Laplacian Pyramid Networks for Fast and Accurate Super-Resolution
+%       Wei-Sheng Lai, Jia-Bin Huang, Narendra Ahuja, and Ming-Hsuan Yang
+%       IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2017
+%
+%   Contact:
+%       Wei-Sheng Lai
+%       wlai24@ucmerced.edu
+%       University of California, Merced
+% -------------------------------------------------------------------------
+
 %CNN_TRAIN_DAG Demonstrates training a CNN using the DagNN wrapper
 %    CNN_TRAIN_DAG() is similar to CNN_TRAIN(), but works with
 %    the DagNN wrapper instead of the SimpleNN wrapper.

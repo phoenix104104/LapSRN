@@ -1,12 +1,12 @@
-function f = bilinear_kernel(k, numGroups, numClasses)
+function f = bilinear_kernel(k, num_input, num_output)
 % -------------------------------------------------------------------------
 %   Description:
 %       create bilinear interpolation kernel for the convt (deconv) layer
 %
 %   Input:
 %       - k             : kernel size k x k
-%       - numGroups     : number of filter groups convt layer
-%       - numClasses    : number of input channels
+%       - num_input     : number of input channels
+%       - num_output    : number of output channels
 %
 %   Output:
 %       - f             : bilinear filter
@@ -23,24 +23,19 @@ function f = bilinear_kernel(k, numGroups, numClasses)
 % -------------------------------------------------------------------------
 
 
-    factor = floor((k + 1) / 2);
+    radius = ceil(k / 2);
     
     if rem(k, 2) == 1
-        center = factor;
+        center = radius;
     else
-      center = factor + 0.5;
+        center = radius + 0.5;
     end
     
     C = 1:k;
-    f = zeros(k, k, numGroups, numClasses);
-
-    for i = 1:numGroups
-        for j = 1:numClasses
-            f(:, :, i, j) = ...
-                (ones(1, k) - abs(C - center) ./ factor)' ...
-              * (ones(1, k) - abs(C - center) ./ factor);
-        end
-    end
+    f = (ones(1, k) - abs(C - center) ./ radius)' ...
+      * (ones(1, k) - abs(C - center) ./ radius);
+    
+    f = repmat(f, 1, 1, num_input, num_output);
 
 
 end

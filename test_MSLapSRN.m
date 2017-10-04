@@ -1,11 +1,12 @@
-function test_LapSRN(model_name, epoch, dataset, test_scale, gpu, save_img, compute_ifc)
+function test_MSLapSRN(model_name, model_scale, epoch, dataset, test_scale, gpu, save_img, compute_ifc)
 % -------------------------------------------------------------------------
 %   Description:
-%       Script to test LapSRN on benchmark datasets
+%       Script to test MS-LapSRN on benchmark datasets
 %       Compute PSNR, SSIM and IFC
 %
 %   Input:
 %       - model_name    : model filename saved in 'models' folder
+%       - model_scale   : model upsampling scale for constructing pyramid
 %       - epoch         : model epoch to test
 %       - dataset       : testing dataset (Set5, Set14, BSDS100, Urban100, Manga109)
 %       - test_scale    : testing SR scale
@@ -14,9 +15,9 @@ function test_LapSRN(model_name, epoch, dataset, test_scale, gpu, save_img, comp
 %       - compute_ifc   : Compute IFC or not [Default = 0]
 %
 %   Citation: 
-%       Deep Laplacian Pyramid Networks for Fast and Accurate Super-Resolution
+%       Fast and Accurate Image Super-Resolution with Deep Laplacian Pyramid Networks
 %       Wei-Sheng Lai, Jia-Bin Huang, Narendra Ahuja, and Ming-Hsuan Yang
-%       IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2017
+%       arXiv, 2017
 %
 %   Contact:
 %       Wei-Sheng Lai
@@ -24,6 +25,10 @@ function test_LapSRN(model_name, epoch, dataset, test_scale, gpu, save_img, comp
 %       University of California, Merced
 % -------------------------------------------------------------------------
     
+    if nargin < 5
+        error('test_MSLapSRN(model_filename, epoch, dataset, test_scale, gpu, [save_img = 0]');
+    end
+
     if ~exist('save_img', 'var')
         save_img = 0;
     end
@@ -37,23 +42,39 @@ function test_LapSRN(model_name, epoch, dataset, test_scale, gpu, save_img, comp
     addpath(fullfile(pwd, 'matconvnet/matlab'));
     vl_setupnn;
     
-    %% Load model
+    
+    %% Load multi-scale model
     model_filename = fullfile('models', model_name, sprintf('net-epoch-%d.mat', epoch));
     fprintf('Load %s\n', model_filename);
     
     net = load(model_filename);
-    net = dagnn.DagNN.loadobj(net.net);
-    net.mode = 'test' ;
+    net_trained = dagnn.DagNN.loadobj(net.net);
 
-    output_var = 'level1_output';
-    output_index = net.getVarIndex(output_var);
-    net.vars(output_index).precious = 1;
+    opts_filename = fullfile('models', model_name, 'opts.mat');
+    fprintf('Load %s\n', opts_filename);
+
+    opts = load(opts_filename);
+    opts = opts.opts;
+
+    opts.scales = [model_scale];
+
+    %% create single-scale model
+    net = init_MSLapSRN_model(opts, 'test');
+
+    %% copy pretrained weights
+    fprintf('Copy weights to single scale model...\n');
+    net = copy_model_weights(net, net_trained);
+
+    num_params = count_network_parameters(net);
+    fprintf('================================\n');
+    fprintf('Total %d network parameters\n', num_params);
+    fprintf('================================\n');
 
     if( gpu )
         gpuDevice(gpu)
         net.move('gpu');
     end
-    
+
     %% image path
     input_dir = fullfile('datasets', dataset);
     output_dir = fullfile('models', model_name, sprintf('epoch_%d', epoch), ...
@@ -62,7 +83,7 @@ function test_LapSRN(model_name, epoch, dataset, test_scale, gpu, save_img, comp
     if( ~exist(output_dir, 'dir') )
         mkdir(output_dir);
     end
-    
+
     %% load image list
     list_filename = sprintf('lists/%s.txt', dataset);
     img_list = load_list(list_filename);
@@ -78,7 +99,7 @@ function test_LapSRN(model_name, epoch, dataset, test_scale, gpu, save_img, comp
     for i = 1:num_img
         
         img_name = img_list{i};
-        fprintf('Process %s %d/%d: %s\n', dataset, i, num_img, img_name);
+        fprintf('Testing %s %dx: %d/%d: %s: epoch %d\n', dataset, test_scale, i, num_img, model_name, epoch);
         
         %% Load HR image
         input_filename = fullfile(input_dir, sprintf('%s.png', img_name));
@@ -87,17 +108,20 @@ function test_LapSRN(model_name, epoch, dataset, test_scale, gpu, save_img, comp
     
         %% generate LR image
         img_LR = imresize(img_GT, 1/test_scale, 'bicubic');
-            
+        
         %% apply SR
-        [img_HR, time(i)] = SR_LapSRN(img_LR, net, test_scale, gpu);
-            
+        [img_HR, time(i)] = SR_MSLapSRN(img_LR, net, model_scale, test_scale, gpu);
+        
+        % if out of memory, use patch-based SR
+        %[img_HR, time(i)] = SR_patch_MSLapSRN(img_LR, net, model_scale, test_scale, gpu);
+        
         %% save result
         if( save_img )
             output_filename = fullfile(output_dir, sprintf('%s.png', img_name));
             fprintf('Save %s\n', output_filename);
             imwrite(img_HR, output_filename);
         end
-
+        
         %% evaluate
         [PSNR(i), SSIM(i), IFC(i)] = evaluate_SR(img_GT, img_HR, test_scale, compute_ifc);
 

@@ -12,7 +12,7 @@ IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2017
 1. [Citation](#citation)
 1. [Requirements and Dependencies](#requirements-and-dependencies)
 1. [Installation](#installation)
-1. [Demo](#demo)
+1. [Test Pre-trained Models](#test-pre-trained-models)
 1. [Training LapSRN](#training-lapsrn)
 1. [Training MS-LapSRN](#training-ms-lapsrn)
 
@@ -54,7 +54,7 @@ Run install.m in MATLAB to compile MatConvNet:
    
 If you install MatConvNet in your own path, you need to change the corresponding path in `install.m`, `train_LapSRN.m` and `test_LapSRN.m`.
 
-### Demo
+### Test Pre-trained Models
 
 To test LapSRN / MS-LapSRN on a single-image:
 

@@ -21,6 +21,6 @@ function img = shave_bd(img, bd)
 %       University of California, Merced
 % -------------------------------------------------------------------------
 
-    img = img(1+bd:end-bd, 1+bd:end-bd, :);
+    img = img(1+bd:end-bd, 1+bd:end-bd, :, :);
     
 end

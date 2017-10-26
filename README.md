@@ -121,6 +121,5 @@ which will report the PSNR and SSIM.
 
 ### Third-Party Implementation
 
-[Pytorch](https://github.com/twtygqyy/pytorch-LapSRN)
-
-[TensorFlow](https://github.com/zjuela/LapSRN-tensorflow)
+- [Pytorch](https://github.com/twtygqyy/pytorch-LapSRN)
+- [TensorFlow](https://github.com/zjuela/LapSRN-tensorflow)

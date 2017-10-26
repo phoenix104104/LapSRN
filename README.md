@@ -15,6 +15,7 @@ IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2017
 1. [Test Pre-trained Models](#test-pre-trained-models)
 1. [Training LapSRN](#training-lapsrn)
 1. [Training MS-LapSRN](#training-ms-lapsrn)
+1. [Third-Party Implementation](#third-party-implementation)
 
 ### Introduction
 The Laplacian Pyramid Super-Resolution Network (LapSRN) is a progressive super-resolution model that super-resolves an low-resolution images in a coarse-to-fine Laplacian pyramid framework.
@@ -117,3 +118,9 @@ To test your trained MS-LapSRN model, use `test_MS-LapSRN(model_name, model_scal
     >> test_MSLapSRN('MSLapSRN_x248_SS_D5_R2_fn64_L1_train_T91_BSDS200_pw128_lr5e-06_step100_drop0.5_min1e-06_bs64', 4, 10, 'Set5', 3, 1)
 
 which will report the PSNR and SSIM.
+
+### Third-Party Implementation
+
+[Pytorch](https://github.com/twtygqyy/pytorch-LapSRN)
+
+[TensorFlow](https://github.com/zjuela/LapSRN-tensorflow)
